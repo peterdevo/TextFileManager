@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using System;
 using FileManagerLibrary;
+using System.IO;
+using System.Reflection;
 
 namespace FileManagerTests
 {
@@ -9,18 +11,23 @@ namespace FileManagerTests
         [Test]
         public void TestFileRead()
         {
-            FileManager fileManager = new FileManager();
+            FileManager.ReadFile(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt");
+            string expected = "Hejsan";
+            FileManager.Files.TryGetValue(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt", out string actual);
 
-
-            Assert.AreEqual(true, fileManager.ReadFile("C:\\Users\\Cazper\\source\\repos\\FileManager\\FileManagerTests\\test.txt"));
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
         public void TestIncorrectFileTypeThrowsException()
         {
-            FileManager fileManager = new FileManager();
+            Assert.Throws<InvalidOperationException>(() => FileManager.ReadFile("example.exe"));
+        }
 
-            Assert.Throws<InvalidOperationException>(() => fileManager.ReadFile("example.exe"));
+        [Test]
+        public void Test_ThatNonExistentFile_ThrowsException()
+        {
+            Assert.Throws<FileNotFoundException>(() => FileManager.ReadFile("FinnsGaranteratInte.txt"));
         }
     }
 }

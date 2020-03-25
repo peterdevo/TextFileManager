@@ -5,12 +5,11 @@ using System.Linq;
 
 namespace FileManagerLibrary
 {
-    public class FileManager
+    public static class FileManager
     {
-        public string Text { get; set; }
-        public List<string> Words { get; set; }
+        public static Dictionary<string, string> Files { get; set; } = new Dictionary<string, string>();
 
-        public void ReadFile(string input)
+        public static void ReadFile(string input)
         {
             bool exists = File.Exists(input);
 
@@ -20,15 +19,17 @@ namespace FileManagerLibrary
             }
 
             if (exists)
-            {
-                Text = File.ReadAllText(input);
-                SplitText(Text);
-            }
+                Files.Add(input, File.ReadAllText(input));
+            
+            else
+                throw new FileNotFoundException("File not found!");
         }
 
-        private void SplitText(string text)
-        {
-            Words = text.Split(' ').Select(x => x.Trim(',', '.', '-', '?', '!')).ToList();
-        }
+
+
+        //private static void SplitText(string text)
+        //{
+        //    Words = text.Split(' ').Select(x => x.Trim(',', '.', '-', '?', '!')).ToList();
+        //}
     }
 }

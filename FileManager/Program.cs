@@ -7,12 +7,7 @@ namespace FileManagerApp
     {
         static void Main(string[] args)
         {
-            var fileManager = new FileManager();
-            fileManager.ReadFile(@"C:\read\test.txt");
-            foreach(var word in fileManager.Words)
-            {
-                Console.WriteLine(word);
-            }
+            
         }
     }
 }
