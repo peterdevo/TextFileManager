@@ -8,8 +8,10 @@ namespace FileManagerTests
 {
     public class Tests
     {
+        #region ReadFile Method Tests
+
         [Test]
-        public void TestFileRead()
+        public void Test_FileRead()
         {
             FileManager.ReadFile(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt");
             string expected = "Hejsan";
@@ -19,7 +21,7 @@ namespace FileManagerTests
         }
 
         [Test]
-        public void TestIncorrectFileTypeThrowsException()
+        public void Test_ThatIncorrectFileType_ThrowsException()
         {
             Assert.Throws<InvalidOperationException>(() => FileManager.ReadFile("example.exe"));
         }
@@ -29,5 +31,17 @@ namespace FileManagerTests
         {
             Assert.Throws<FileNotFoundException>(() => FileManager.ReadFile("FinnsGaranteratInte.txt"));
         }
+
+        #endregion
+
+        #region SaveFile Method Tests
+
+        [Test]
+        public void Test_SavingFileWithIncorrectFilePath()
+        {
+
+        }
+
+        #endregion
     }
 }
