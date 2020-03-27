@@ -15,9 +15,9 @@ namespace FileManagerTests
         {
             FileManager.ReadFile(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt");
             string expected = "Hejsan";
-            FileManager.Files.TryGetValue(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt", out string actual);
+            // FileManager.Files.TryGetValue(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt", out string actual);
 
-            Assert.AreEqual(expected, actual);
+            // Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -37,9 +37,12 @@ namespace FileManagerTests
         #region SaveFile Method Tests
 
         [Test]
-        public void Test_SavingFileWithIncorrectFilePath()
+        public void Test_ReadFile()
         {
+            string filePath = Directory.GetCurrentDirectory() + "test.txt";
+            FileManager.SaveFile("blalblbalbla", filePath);
 
+            Assert.IsTrue(File.Exists(filePath[0..^4] + "_Modified.txt"));
         }
 
         #endregion
