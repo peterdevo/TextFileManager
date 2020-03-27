@@ -27,9 +27,10 @@ namespace FileManagerLibrary
 
 
 
-        //private static void SplitText(string text)
-        //{
-        //    Words = text.Split(' ').Select(x => x.Trim(',', '.', '-', '?', '!')).ToList();
-        //}
+        private static void SplitText(string text)
+        {
+            List<string> temp = new List<string>();
+            temp = text.Split(' ').Select(x => x.Trim(',', '.', '-', '?', '!')).ToList();
+        }
     }
 }
