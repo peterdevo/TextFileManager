@@ -32,14 +32,9 @@ namespace FileManagerLibrary
             File.WriteAllText(modifiedFilePath, textToSave);
         }
 
-        private static void AddWordsToCollection(string filePath, string text)
-        {
-            Files.Add(filePath, SplitText(text));
-        }
-
-        private static List<string> SplitText(string text)
-        {
-            return text.Split(' ').Select(x => x.Trim(',', '.', '-', '?', '!')).ToList();
-        }
+        //private static void SplitText(string text)
+        //{
+        //    Words = text.Split(' ').Select(x => x.Trim(',', '.', '-', '?', '!')).ToList();
+        //}
     }
 }
