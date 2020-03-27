@@ -15,7 +15,7 @@ namespace FileManagerLibrary
 
             if (Path.GetExtension(input) != ".txt")
             {
-                throw new InvalidOperationException("Incorrect file type");
+                throw new InvalidOperationException("Incorrect file type!");
             }
 
             if (exists)
@@ -25,7 +25,13 @@ namespace FileManagerLibrary
                 throw new FileNotFoundException("File not found!");
         }
 
+        public static void SaveFile(string textToSave, string filePath) 
+        {
+            string modifiedFilePath = Path.GetFileNameWithoutExtension(filePath) + "_Modified.txt";
+            File.Create(modifiedFilePath);
 
+            File.WriteAllText(modifiedFilePath, textToSave);
+        }
 
         //private static void SplitText(string text)
         //{
