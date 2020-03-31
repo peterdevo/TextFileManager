@@ -3,6 +3,7 @@ using System;
 using FileManagerLibrary;
 using System.IO;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace FileManagerTests
 {
@@ -43,6 +44,31 @@ namespace FileManagerTests
             FileManager.SaveFile("blalblbalbla", filePath);
 
             Assert.IsTrue(File.Exists(filePath[0..^4] + "_Modified.txt"));
+        }
+
+        #endregion
+
+        #region BinarySearch Tests
+
+        [Test]
+        public void CountOccurencesOf_ReturnsZero()
+        {
+            List<string> list = new List<string>() { "a", "c", "d", "e", "f", "g", "e" };
+            Assert.IsTrue(list.CountOccurencesOf("b") == 0);
+        }
+
+        [Test]
+        public void CountOccurencesOf_SameStrings()
+        {
+            List<string> list = new List<string>() { "y", "y", "y", "y", "y", "y", "y", "y", "y", "y" };
+            Assert.IsTrue(list.CountOccurencesOf("y") == 10);
+        }
+
+        [Test]
+        public void CountOccurencesOf_CorrectCount()
+        {
+            List<string> list = new List<string>() { "a", "a", "c", "d", "e", "f", "g", "h", "i", "j" };
+            Assert.IsTrue(list.CountOccurencesOf("a") == 2);
         }
 
         #endregion
