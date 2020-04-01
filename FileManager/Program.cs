@@ -9,8 +9,7 @@ namespace FileManagerApp
     {
         static void Main(string[] args)
         {
-
-            Console.ReadKey();
+            Client.Menu();
         }
     }
 }
