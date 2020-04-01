@@ -7,7 +7,7 @@ namespace FileManagerApp
     {
         static void Main(string[] args)
         {
-            FileManager.SaveFile("aisjfjsbngjdshgf jsdnfgj nsdijkfgnksdjn fgjksndgf", @"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt");
+
         }
     }
 }
