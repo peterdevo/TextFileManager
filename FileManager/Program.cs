@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Reflection;
 using FileManagerLibrary;
 
 namespace FileManagerApp
@@ -8,6 +10,7 @@ namespace FileManagerApp
         static void Main(string[] args)
         {
 
+            Console.ReadKey();
         }
     }
 }

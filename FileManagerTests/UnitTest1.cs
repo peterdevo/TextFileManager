@@ -14,11 +14,24 @@ namespace FileManagerTests
         [Test]
         public void Test_FileRead()
         {
-            FileManager.ReadFile(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt");
-            string expected = "Hejsan";
-            // FileManager.Files.TryGetValue(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt", out string actual);
+            string workingDirectory = Directory.GetCurrentDirectory();
 
-            // Assert.AreEqual(expected, actual);
+            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+
+            FileManager.ReadFile(projectDirectory + "\\test.txt");
+            List<string> expected = new List<string>() 
+            {
+                "abc",
+                "def",
+                "fds",
+                "afd",
+                "kter",
+                "fdes"
+            };
+
+            FileManager.Files.TryGetValue(projectDirectory + "\\test.txt", out List<string> actual);
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
