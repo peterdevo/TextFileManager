@@ -77,7 +77,7 @@ namespace FileManagerTests
         public void CheckIfSortInOrder()
         {
             List<string> testList = new List<string> {"b","c","a","g","f"};
-            QuickSort.SortQuick(testList,0,testList.Count-1);
+            QuickSort<string>.SortQuick(testList,0,testList.Count-1);
             List<string> expectedList = new List<string> { "a", "b", "c","f","g" };
             CollectionAssert.AreEqual(expectedList,testList);
         }
@@ -86,7 +86,7 @@ namespace FileManagerTests
         public void CheckIfItSortsTheSortedList()
         {
             List<string> testList = new List<string> { "a", "b", "c", "d","e" };
-            QuickSort.SortQuick(testList, 0, testList.Count - 1);
+            QuickSort<string>.SortQuick(testList, 0, testList.Count - 1);
             List<string> expectedList = new List<string> { "a","b","c","d","e" };
             CollectionAssert.AreEqual(expectedList, testList);
         }
@@ -94,7 +94,7 @@ namespace FileManagerTests
         public void checkIfDuplicatedElementSortCorrectly()
         {
             List<string> testList = new List<string> { "b", "c", "c", "d", "d","b" };
-            QuickSort.SortQuick(testList, 0, testList.Count - 1);
+            QuickSort<string>.SortQuick(testList, 0, testList.Count - 1);
             List<string> expectedList = new List<string> { "b", "b", "c", "c", "d","d" };
             CollectionAssert.AreEqual(expectedList, testList);
         }
@@ -103,7 +103,7 @@ namespace FileManagerTests
         public void CheckIfItIsStable()
         {
             List<string> testList = new List<string> { "b", "a", "c", "c'", "d", };
-            QuickSort.SortQuick(testList, 0, testList.Count - 1);
+            QuickSort<string>.SortQuick(testList, 0, testList.Count - 1);
             List<string> expectedList = new List<string> { "a","b","c","c'","d" };
             CollectionAssert.AreEqual(expectedList, testList);
         }

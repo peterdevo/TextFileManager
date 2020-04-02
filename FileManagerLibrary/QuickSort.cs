@@ -4,17 +4,17 @@ using System.Text;
 
 namespace FileManagerLibrary
 {
-    public static class QuickSort
+    public static class QuickSort<T>where T:IComparable
     {
         //Quick sort algorithm 
-        public static void SortQuick(List<string>list, int left, int right)
+        public static void SortQuick(List<T>list, int left, int right)
         {
             //start and end variabler är använda för att ha koll när behövs göra swap
             int start = left;
             int end = right;
             
             //Definiera en pivot för att jämföra med start och end element.Här väljs pivot i mitten
-            string pivot = list[(left + right) / 2];
+            T pivot = list[(left + right) / 2];
 
            //while loop gäller när start och end inte korsar varandra. Om de korsar varandra, kommer funktionen anropa sig sjäv (recursivt) 
             while (start <= end)
@@ -47,9 +47,9 @@ namespace FileManagerLibrary
                 SortQuick(list, start, right);
         }
       //swap function
-        private static void Swap(List<string>list, int a, int b)
+        private static void Swap(List<T>list, int a, int b)
         {
-            string t = list[a];
+            T t = list[a];
             list[a] = list[b];
             list[b] = t;
         }
