@@ -39,7 +39,10 @@ namespace FileManagerLibrary
 
         private static List<string> SplitText(string text)
         {
-            return text.Split(' ').Select(x => x.Trim(',', '.', '-', '?', '!')).ToList();
+            return text.Split(
+                new[] { ' ', ',', '.', '-', '?', '!', '\n', '\r' },
+                StringSplitOptions.RemoveEmptyEntries
+                ).ToList();
         }
     }
 }
