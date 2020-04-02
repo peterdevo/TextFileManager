@@ -73,6 +73,7 @@ namespace FileManagerTests
 
         #endregion
 
+        #region Quick Sort test
         [Test]
         public void CheckIfSortInOrder()
         {
@@ -107,6 +108,8 @@ namespace FileManagerTests
             List<string> expectedList = new List<string> { "a","b","c","c'","d" };
             CollectionAssert.AreEqual(expectedList, testList);
         }
+
+        #endregion
 
     }
 }
