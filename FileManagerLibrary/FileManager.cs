@@ -40,7 +40,8 @@ namespace FileManagerLibrary
         private static List<string> SplitText(string text)
         {
             return text.Split(
-                new[] { ' ', ',', '.', '-', '?', '!', '\n', '\r', '\r\n' }
+                new[] { ' ', ',', '.', '-', '?', '!', '\n', '\r' },
+                StringSplitOptions.RemoveEmptyEntries
                 ).ToList();
         }
     }
