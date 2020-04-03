@@ -17,7 +17,7 @@ namespace FileManagerLibrary
             int mid = (start + count) / 2;
 
             // Returnerar index om elementet är lika med key
-            if (list[mid].CompareTo(key) == 0)
+            if (list[mid].ToLower().CompareTo(key.ToLower()) == 0)
                 return mid;
 
             // Om elementet är större än key så kollar man vänstra halvan av listan
@@ -47,7 +47,7 @@ namespace FileManagerLibrary
             int left = index - 1;
 
             // Kollar till vänster om ordet om det finns mer av samma
-            while (left >= 0 && source[left].CompareTo(originalWord) == 0)
+            while (left >= 0 && source[left].ToLower().CompareTo(originalWord.ToLower()) == 0)
             {
                 count++;
                 left--;
@@ -55,7 +55,7 @@ namespace FileManagerLibrary
 
             // Kollar till höger
             int right = index + 1;
-            while (right < source.Count && source[right].Equals(originalWord))
+            while (right < source.Count && source[right].ToLower().Equals(originalWord.ToLower()))
             {
                 count++;
                 right++;
