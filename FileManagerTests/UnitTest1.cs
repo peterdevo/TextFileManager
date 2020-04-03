@@ -18,7 +18,7 @@ namespace FileManagerTests
 
             string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
 
-            FileManager.ReadFile(projectDirectory + "\\test.txt");
+            FileManager.ReadFile(projectDirectory + "\\TestFiles\\test.txt");
             List<string> expected = new List<string>() 
             {
                 "abc",
@@ -29,7 +29,7 @@ namespace FileManagerTests
                 "fdes"
             };
 
-            FileManager.Files.TryGetValue(projectDirectory + "\\test.txt", out List<string> actual);
+            FileManager.Files.TryGetValue(projectDirectory + "\\TestFiles\\test.txt", out List<string> actual);
 
             Assert.AreEqual(expected, actual);
         }
@@ -56,12 +56,58 @@ namespace FileManagerTests
             // Arrange
             string workingDirectory = Directory.GetCurrentDirectory();
             string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
-            string filePath = projectDirectory + "\\a.txt";
+            string filePath = projectDirectory + "\\TestFiles\\a.txt";
             // Act
             FileManager.SaveFile(filePath, "asdsadasd");
 
             // Assert
             Assert.IsTrue(File.Exists(filePath[0..^4] + "_Modified.txt"));
+        }
+
+        #endregion
+
+        #region WordOccurence Method Tests
+
+        [Test]
+        public void Test_WordOccurrence()
+        {
+            // Arrange
+            string text = "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. " +
+                "Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. " +
+                "A small river named Duden flows by their place and supplies it with the necessary regelialia. ";
+            string workingDirectory = Directory.GetCurrentDirectory();
+            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+            string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";
+            string actual = "", expected = "3";
+            
+            // Act
+            File.WriteAllText(filePath, text);
+            FileManager.ReadFile(filePath);
+            actual = FileManager.WordOccurrences("far")[2];
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Test_WordOccurrence_WithMoreThanOneWord()
+        {
+            // Arrange
+            string text = "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. " +
+                "Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. " +
+                "A small river named Duden flows by their place and supplies it with the necessary regelialia. ";
+            string workingDirectory = Directory.GetCurrentDirectory();
+            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+            string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";
+            string[] result = null;
+
+            // Act
+            FileManager.ReadFile(filePath);
+            File.WriteAllText(filePath, text);
+            result = FileManager.WordOccurrences("far far");
+
+            // Assert
+            Assert.IsNull(result);
         }
 
         #endregion

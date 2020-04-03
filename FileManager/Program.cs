@@ -40,7 +40,6 @@ namespace FileManagerApp
                         catch (Exception e)
                         {
                             Console.WriteLine(e.Message); Thread.Sleep(1000);
-
                         }
 
                         break;
@@ -58,17 +57,17 @@ namespace FileManagerApp
                     case 3:
                         Console.WriteLine("Specify a word to search for: ");
                         string word = Console.ReadLine();
-
-                        if (word.Contains(" "))
-                        {
-                            Console.WriteLine("One word."); Thread.Sleep(1000);
-                            break;
-                        }
-
+                        
                         var result = FileManager.WordOccurrences(word);
 
+                        if (result == null)
+                        {
+                            Console.WriteLine("One word only."); Thread.Sleep(1000);
+                            break;
+                        }
+                            
                         Console.Clear();
-                        Console.WriteLine("Total Occurrences: {0} \nFile with highest accuracy: {1} -> {2}", result[0], result[1], result[2]);
+                        Console.WriteLine("Total Occurrences: {0} \nFile with highest accuracy: {1} -> {2}", result[0], Path.GetFileName(result[1]), result[2]);
 
                         Console.WriteLine("Press any key to return to menu");
                         Console.ReadKey();
