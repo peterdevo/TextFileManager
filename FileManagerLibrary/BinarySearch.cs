@@ -14,7 +14,7 @@ namespace FileManagerLibrary
                 return -1;
 
             // Sätter index till mitten av listan
-            int mid = start + (count - 1) / 2;
+            int mid = (start + count) / 2;
 
             // Returnerar index om elementet är lika med key
             if (list[mid].CompareTo(key) == 0)
