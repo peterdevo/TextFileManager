@@ -14,11 +14,24 @@ namespace FileManagerTests
         [Test]
         public void Test_FileRead()
         {
-            FileManager.ReadFile(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt");
-            string expected = "Hejsan";
-            // FileManager.Files.TryGetValue(@"C:\Users\Gurrapettersson\source\github\FileHandler\FileManagerTests\test.txt", out string actual);
+            string workingDirectory = Directory.GetCurrentDirectory();
 
-            // Assert.AreEqual(expected, actual);
+            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+
+            FileManager.ReadFile(projectDirectory + "\\TestFiles\\test.txt");
+            List<string> expected = new List<string>() 
+            {
+                "abc",
+                "def",
+                "fds",
+                "afd",
+                "kter",
+                "fdes"
+            };
+
+            FileManager.Files.TryGetValue(projectDirectory + "\\TestFiles\\test.txt", out List<string> actual);
+
+            Assert.AreEqual(expected, actual);
         }
 
         [Test]
@@ -38,12 +51,63 @@ namespace FileManagerTests
         #region SaveFile Method Tests
 
         [Test]
-        public void Test_ReadFile()
+        public void Test_SaveFile()
         {
-            string filePath = Directory.GetCurrentDirectory() + "test.txt";
-            FileManager.SaveFile("blalblbalbla", filePath);
+            // Arrange
+            string workingDirectory = Directory.GetCurrentDirectory();
+            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+            string filePath = projectDirectory + "\\TestFiles\\a.txt";
+            // Act
+            FileManager.SaveFile(filePath, "asdsadasd");
 
+            // Assert
             Assert.IsTrue(File.Exists(filePath[0..^4] + "_Modified.txt"));
+        }
+
+        #endregion
+
+        #region WordOccurence Method Tests
+
+        [Test]
+        public void Test_WordOccurrence()
+        {
+            // Arrange
+            string text = "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. " +
+                "Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. " +
+                "A small river named Duden flows by their place and supplies it with the necessary regelialia. ";
+            string workingDirectory = Directory.GetCurrentDirectory();
+            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+            string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";
+            string actual = "", expected = "3";
+            
+            // Act
+            File.WriteAllText(filePath, text);
+            FileManager.ReadFile(filePath);
+            actual = FileManager.WordOccurrences("far")[2];
+
+            // Assert
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void Test_WordOccurrence_WithMoreThanOneWord()
+        {
+            // Arrange
+            string text = "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. " +
+                "Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. " +
+                "A small river named Duden flows by their place and supplies it with the necessary regelialia. ";
+            string workingDirectory = Directory.GetCurrentDirectory();
+            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+            string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";
+            string[] result = null;
+
+            // Act
+            FileManager.ReadFile(filePath);
+            File.WriteAllText(filePath, text);
+            result = FileManager.WordOccurrences("far far");
+
+            // Assert
+            Assert.IsNull(result);
         }
 
         #endregion
@@ -72,5 +136,44 @@ namespace FileManagerTests
         }
 
         #endregion
+
+        #region Quick Sort test
+        [Test]
+        public void CheckIfSortInOrder()
+        {
+            List<string> testList = new List<string> {"b","c","a","g","f"};
+            QuickSort<string>.SortQuick(ref testList,0,testList.Count-1);
+            List<string> expectedList = new List<string> { "a", "b", "c","f","g" };
+            CollectionAssert.AreEqual(expectedList,testList);
+        }
+
+        [Test]
+        public void CheckIfItSortsTheSortedList()
+        {
+            List<string> testList = new List<string> { "a", "b", "c", "d","e" };
+            QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
+            List<string> expectedList = new List<string> { "a","b","c","d","e" };
+            CollectionAssert.AreEqual(expectedList, testList);
+        }
+        [Test]
+        public void checkIfDuplicatedElementSortCorrectly()
+        {
+            List<string> testList = new List<string> { "b", "c", "c", "d", "d","b" };
+            QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
+            List<string> expectedList = new List<string> { "b", "b", "c", "c", "d","d" };
+            CollectionAssert.AreEqual(expectedList, testList);
+        }
+
+        [Test]
+        public void CheckIfItIsStable()
+        {
+            List<string> testList = new List<string> { "b", "a", "c", "c'", "d", };
+            QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
+            List<string> expectedList = new List<string> { "a","b","c","c'","d" };
+            CollectionAssert.AreEqual(expectedList, testList);
+        }
+
+        #endregion
+
     }
 }
