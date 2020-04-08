@@ -170,15 +170,16 @@ namespace FileManagerTests
 
         #endregion
 
-        #region Quick Sort test
+        #region Quick Sort Tests
         [Test]
-        public void CheckIfSortInOrder()
+        public void CheckIfSortAscesdingInOrder()
         {
             List<string> testList = new List<string> {"b","c","a","g","f"};
             QuickSort<string>.SortQuick(ref testList,0,testList.Count-1);
             List<string> expectedList = new List<string> { "a", "b", "c","f","g" };
             CollectionAssert.AreEqual(expectedList,testList);
         }
+       
 
         [Test]
         public void CheckIfItSortsTheSortedList()
@@ -202,9 +203,51 @@ namespace FileManagerTests
         {
             List<string> testList = new List<string> { "b", "a", "c", "c'", "d", };
             QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
-            List<string> expectedList = new List<string> { "a","b","c","c'","d" };
+            List<string> expectedList = new List<string> { "a", "b", "c", "c'", "d" };
             CollectionAssert.AreEqual(expectedList, testList);
         }
+        [Test]
+        public void CheckCharacterÄÖÅ()
+        {
+            List<string> testList = new List<string> { "Jag", "gillar", "äta","mat","å","ögon"};
+            QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
+            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","å","äta","ögon" };
+            CollectionAssert.AreEqual(expectedList, testList);
+        }
+
+        [Test]
+        public void CheckSpecialCharacter()
+        {
+            List<string> testList = new List<string> { "!", "0", "1", "2", "3" ,"d","b","a", "()"};
+            QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
+            List<string> expectedList = new List<string> { "!", "()", "0", "1", "2", "3","a","b","d"};
+            CollectionAssert.AreEqual(expectedList, testList);
+        }
+
+        [Test]
+        public void ThrowNullExceptionIfListIsNull()
+        {
+            List<string> testList = null;
+
+            Assert.Throws<NullReferenceException>(() => QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1));
+        }
+        [Test]
+        public void ThrowIndexOutOfRangeExceptionIfLeftIslessThan0()
+        {
+            List<string> testList = new List<string> {"b","a"};
+
+            Assert.Throws<IndexOutOfRangeException>(() => QuickSort<string>.SortQuick(ref testList, -1, testList.Count));
+        }
+
+        [Test]
+        public void ThrowIndexOutOfRangeExceptionIfRightisIsGreaterThanOrEqualToCount()
+        {
+            List<string> testList = new List<string> { "b", "a" };
+
+            Assert.Throws<IndexOutOfRangeException>(() => QuickSort<string>.SortQuick(ref testList, 0, testList.Count));
+        }
+
+       
 
         #endregion
 
