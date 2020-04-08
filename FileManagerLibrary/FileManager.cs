@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace FileManagerLibrary
 {
@@ -18,45 +19,47 @@ namespace FileManagerLibrary
             bool exists = File.Exists(filePath);
 
             if (Path.GetExtension(filePath) != ".txt")
-            {
                 throw new InvalidOperationException("Incorrect file type!");
-            }
 
             if (exists)
                 AddWordsToCollection(filePath, File.ReadAllText(filePath));
-
             else
                 throw new FileNotFoundException("File not found!");
         }
 
+        /// <summary>
+        /// Takes an already read file from the 'Files' Property and sorts it
+        /// </summary>
+        /// <param name="fileName"></param>
         public static void SortCollection(string fileName)
         {
+            if (File.ReadAllText(fileName) == string.Empty)
+                throw new InvalidOperationException("File is empty!");
+
             var collection = Files[fileName];
 
             QuickSort<string>.SortQuick(ref collection, 0, collection.Count - 1);
         }
 
-
         /// <summary>
-        /// Finds all occurrences of a word amongst all loaded files
+        /// Finds all occurrences of a key amongst all loaded files
         /// </summary>
-        /// <param name="word">The word to search for</param>
+        /// <param name="key">The key to search for</param>
         /// <returns></returns>
-        public static string[] WordOccurrences(string word)
+        public static string[] WordOccurrences(string key)
         {
-            if (word.Contains(" "))
+            if (key.Contains(" "))
                 return null;
 
             int total = 0, max = 0;
             string maxFilePath = string.Empty;
-            
 
             foreach (var item in Files)
             {
                 var sortedList = item.Value;
                 QuickSort<string>.SortQuick(ref sortedList, 0, sortedList.Count - 1);
                 
-                int occurrences = sortedList.CountOccurencesOf(word);
+                int occurrences = sortedList.CountOccurencesOf(key);
                 total += occurrences;
 
                 if (occurrences > max)
@@ -75,13 +78,19 @@ namespace FileManagerLibrary
         /// </summary>
         /// <param name="filePath">Path to save the provided string at</param>
         /// <param name="textToSave">Text to save as a text file</param>
-        public static void SaveFile(string filePath, string textToSave)
+        public static void SaveFile(string filePath)
         {
+            StringBuilder textToSave = new StringBuilder();
+
+            foreach (var item in FileManager.Files[filePath])
+            {
+                textToSave.Append(item + " ");
+            }
+
             string modifiedFilePath = Path.GetFullPath(filePath.Substring(0, filePath.Length - 4) + "_Modified.txt");
 
-            File.WriteAllText(modifiedFilePath, textToSave);
+            File.WriteAllText(modifiedFilePath, textToSave.ToString());
         }
-
 
         /// <summary>
         /// Splits all the words in a string and saves them in the 'Files' Property along with the filepath
@@ -93,9 +102,8 @@ namespace FileManagerLibrary
             Files.Add(filePath, SplitText(text));
         }
 
-
         /// <summary>
-        /// Separates all words in a string
+        /// Separates all characters in a string
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>

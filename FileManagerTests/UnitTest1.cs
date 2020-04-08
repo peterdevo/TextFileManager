@@ -4,20 +4,20 @@ using FileManagerLibrary;
 using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace FileManagerTests
 {
     public class Tests
     {
-        #region ReadFile Method Tests
+        private static string workingDirectory = Directory.GetCurrentDirectory();
+        private static string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+
+        #region ReadFile Tests
 
         [Test]
         public void Test_FileRead()
         {
-            string workingDirectory = Directory.GetCurrentDirectory();
-
-            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
-
             FileManager.ReadFile(projectDirectory + "\\TestFiles\\test.txt");
             List<string> expected = new List<string>() 
             {
@@ -48,25 +48,62 @@ namespace FileManagerTests
 
         #endregion
 
-        #region SaveFile Method Tests
+        #region SortCollection Tests
+
+        [Test]
+        public void Test_SortCollection()
+        {
+            // Arrange 
+            var expected = new List<string>();
+            var actual = new List<string>();
+            string filePath = projectDirectory + "\\TestFiles\\test.txt";
+
+            // Act
+            FileManager.ReadFile(filePath);
+            expected = FileManager.Files[filePath].OrderBy(x => x[0]).ToList();
+
+            FileManager.SortCollection(filePath);
+            actual = File.ReadAllText(filePath).TrimEnd().Split(" ").ToList();
+
+            // Assert
+
+        }
+
+        [Test]
+        public void Test_ThatSortCollection_ThrowsException_WhenFileIsEmpty()
+        {
+            // Arrange
+            string filePath = projectDirectory + "\\TestFiles\\empty.txt";
+
+            // Act
+            FileManager.ReadFile(filePath);
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(() => FileManager.SortCollection(filePath));
+        }
+
+        #endregion
+
+        #region SaveFile Tests
 
         [Test]
         public void Test_SaveFile()
         {
             // Arrange
-            string workingDirectory = Directory.GetCurrentDirectory();
-            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
             string filePath = projectDirectory + "\\TestFiles\\a.txt";
+            
             // Act
-            FileManager.SaveFile(filePath, "asdsadasd");
+            FileManager.SaveFile(filePath);
 
             // Assert
             Assert.IsTrue(File.Exists(filePath[0..^4] + "_Modified.txt"));
         }
 
+
+
         #endregion
 
-        #region WordOccurence Method Tests
+        #region WordOccurence Tests
 
         [Test]
         public void Test_WordOccurrence()
@@ -75,8 +112,6 @@ namespace FileManagerTests
             string text = "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. " +
                 "Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. " +
                 "A small river named Duden flows by their place and supplies it with the necessary regelialia. ";
-            string workingDirectory = Directory.GetCurrentDirectory();
-            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
             string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";
             string actual = "", expected = "3";
             
@@ -96,8 +131,6 @@ namespace FileManagerTests
             string text = "Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. " +
                 "Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. " +
                 "A small river named Duden flows by their place and supplies it with the necessary regelialia. ";
-            string workingDirectory = Directory.GetCurrentDirectory();
-            string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
             string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";
             string[] result = null;
 
@@ -171,6 +204,29 @@ namespace FileManagerTests
             QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
             List<string> expectedList = new List<string> { "a","b","c","c'","d" };
             CollectionAssert.AreEqual(expectedList, testList);
+        }
+
+        #endregion
+
+        #region Read, Sort and Save File Integration Test
+
+        [Test]
+        public void ReadFile_SortTheFile_SaveTheFile()
+        {
+            // Arrange
+            string filePath = projectDirectory + "\\TestFiles\\test.txt";
+            var expected = new List<string>();
+            var actual = new List<string>();
+
+            // Act
+            FileManager.ReadFile(filePath);
+            FileManager.SortCollection(filePath);
+            FileManager.SaveFile(filePath);
+            expected = FileManager.Files[filePath].OrderBy(x => x[0]).ToList();
+            actual = File.ReadAllText(filePath[0..^4] + "_Modified.txt").TrimEnd().Split(" ").ToList();
+
+            // Assert
+            Assert.AreEqual(expected, actual);
         }
 
         #endregion
