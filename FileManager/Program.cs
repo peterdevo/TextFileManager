@@ -85,7 +85,7 @@ namespace FileManagerApp
                             Console.Write(item + " ");
                         }
 
-                        Console.WriteLine("Press any key to return to menu");
+                        Console.WriteLine("\nPress any key to return to menu");
                         Console.ReadKey();
 
                         break;
@@ -96,14 +96,7 @@ namespace FileManagerApp
                         if (filePath == null)
                             break;
 
-                        StringBuilder textToSave = new StringBuilder();
-
-                        foreach (var item in FileManager.Files[filePath])
-                        {
-                            textToSave.Append(item + " ");
-                        }
-
-                        FileManager.SaveFile(filePath, textToSave.ToString());
+                        FileManager.SaveFile(filePath);
 
                         break;
 
