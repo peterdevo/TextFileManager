@@ -23,9 +23,26 @@ namespace FileManagerApp
                 Console.Clear();
                 Console.Write("1. Add File \n2. Sort Words Alphabetically \n3. Search for a specific word \n4. View file \n5. Save File \n6. Exit Application \nChoice: ");
                 if (int.TryParse(Console.ReadLine(), out int res))
+                {
                     choice = res;
+                }                    
+
                 else
+                {
+                    Console.WriteLine("The choice does not exist");
+                    Thread.Sleep(2000);
                     continue;
+                }
+
+                if (choice>6||choice<1)
+                {
+                    Console.WriteLine("The choice does not exist");
+                    Thread.Sleep(2000);
+                    continue;
+                }
+              
+                   
+                    
 
                 Console.Clear();
                 switch (choice)
@@ -37,7 +54,11 @@ namespace FileManagerApp
                         {
                             FileManager.ReadFile(Console.ReadLine());
                         }
-                        catch (Exception e)
+                        catch (InvalidOperationException e)
+                        {
+                            Console.WriteLine(e.Message); Thread.Sleep(1000);
+                        }
+                        catch (FileNotFoundException e)
                         {
                             Console.WriteLine(e.Message); Thread.Sleep(1000);
                         }
@@ -49,8 +70,18 @@ namespace FileManagerApp
                         
                         if (filePath == null)
                             break;
+                        try
+                        {
+                            FileManager.SortCollection(filePath);
+                        }
+                        catch (InvalidOperationException e)
+                        {
 
-                        FileManager.SortCollection(filePath);
+                            Console.WriteLine(e.Message);
+                            Thread.Sleep(2000);
+                            continue;
+                        }
+                        
                         Console.WriteLine("Sorted!"); Thread.Sleep(1000);
                         break;
 
