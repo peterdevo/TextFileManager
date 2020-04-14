@@ -58,8 +58,8 @@ namespace FileManagerApp
                 {
                     /*Det första alternativet är att ta emot file path i ReadFile funktionen.
                      *Fångar exception om filen är inte txt fil.
-                     *Fånga exception om filen inte existerar.
-                     *Fånga exception om läggas till samma filens path.
+                     *Fångar exception om filen inte existerar.
+                     *Fångar exception om läggas till samma filens path.
                      */
                     case 1:
                         Console.WriteLine("Enter filepath: ");
@@ -88,7 +88,7 @@ namespace FileManagerApp
                          * Väljer den filen som vill sorteras.
                          * Om inte finns någon fil görs en break.
                          * Fånga exception om filen är tom.
-                        */
+                         */
                     case 2:
                         filePath = GetSelectedFile();
                         
@@ -111,7 +111,7 @@ namespace FileManagerApp
                         /*
                          * Söka efter det ordet som sökas i de filarna.
                          * skrivas ut totala hittade ord i de filarna och också vilket fil som har högst träffsäkethet och dess hittade ord.         
-                        */
+                         */
                     case 3:
                         Console.WriteLine("Specify a word to search for: ");
                         string word = Console.ReadLine();
@@ -153,7 +153,10 @@ namespace FileManagerApp
 
                         break;
 
-                        //Spara filen
+                        /*
+                          Spara filen i en modifierad fil. Om filen är sorterad kommer det att spara sorterad filen annars kommer
+                          det att spara den originella filen. Om det finns ingenting att spara så kommer det att återgå till menyn. 
+                        */                        
                     case 5:
                         filePath = GetSelectedFile();
 
@@ -164,6 +167,7 @@ namespace FileManagerApp
 
                         break;
 
+                        // Avsluta programmet
                     case 6:
                         Environment.Exit(0);
                         break;

@@ -5,6 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace FileManagerTests
 {
@@ -274,5 +275,30 @@ namespace FileManagerTests
 
         #endregion
 
+        #region Search File Integration Test
+       
+        [Test]
+        public void SearchIntegrationTest()
+        {
+            
+            string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";           
+
+          
+            FileManager.ReadFile(filePath);
+            FileManager.SortCollection(filePath);
+            var actual =FileManager.WordOccurrences("far");
+
+            string[]expected = { "3",projectDirectory+"\\TestFiles\\WordOccurrences.txt","3"};
+            
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+      
+       
+     
+
+     
     }
 }
