@@ -33,7 +33,7 @@ namespace FileManagerApp
                     choice = res;
                 }                    
 
-                // Om det är inte ett int så skickas ut ett felmeddelande för att dee inte finns i alternativen.
+                // Om det är inte ett int så skickas ut ett felmeddelande för att det inte finns i alternativen.
                 else
                 {
                     Console.WriteLine("The choice does not exist!");
@@ -53,7 +53,7 @@ namespace FileManagerApp
 
                 Console.Clear();
 
-                // Använda switch för att köra olika alternativ 
+                // Använda switch för att köra olika alternativ. 
                 switch (choice)
                 {
                     /*Det första alternativet är att ta emot file path i ReadFile funktionen.
@@ -133,6 +133,10 @@ namespace FileManagerApp
                         break;
 
                         
+                        /*
+                            Väljs vilken fil som vill ses. Om filen redan är sorterad så kommer det att att visa sorterad version
+                            annars kommer det att visa originell version.Om det finns ingenting att visa kommer det återgå till menyn.
+                        */
                     case 4:
                         filePath = GetSelectedFile();
 
@@ -149,6 +153,7 @@ namespace FileManagerApp
 
                         break;
 
+                        //Spara filen
                     case 5:
                         filePath = GetSelectedFile();
 
