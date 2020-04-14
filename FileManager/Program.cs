@@ -15,38 +15,52 @@ namespace FileManagerApp
          
         static void Main(string[] args)
         {
+           
             while (true)
             {
+                //Initiera valet med noll.
                 int choice = 0;
+                
                 string filePath;
 
                 Console.Clear();
+
                 Console.Write("1. Add File \n2. Sort Words Alphabetically \n3. Search for a specific word \n4. View file \n5. Save File \n6. Exit Application \nChoice: ");
+                
+                //Kolla om det är en int så får choice det värdet. 
                 if (int.TryParse(Console.ReadLine(), out int res))
                 {
                     choice = res;
                 }                    
 
+                // Om det är inte ett int så skickas ut ett felmeddelande för att dee inte finns i alternativen.
                 else
                 {
-                    Console.WriteLine("The choice does not exist");
+                    Console.WriteLine("The choice does not exist!");
                     Thread.Sleep(2000);
                     continue;
                 }
 
+                // Om det är ett int, måste kollas att om det existerar i alternativen
                 if (choice>6||choice<1)
                 {
-                    Console.WriteLine("The choice does not exist");
+                    Console.WriteLine("The choice does not exist!");
                     Thread.Sleep(2000);
                     continue;
                 }
               
-                   
-                    
+                               
 
                 Console.Clear();
+
+                // Använda switch för att köra olika alternativ 
                 switch (choice)
                 {
+                    /*Det första alternativet är att ta emot file path i ReadFile funktionen.
+                     *Fångar exception om filen är inte txt fil.
+                     *Fånga exception om filen inte existerar.
+                     *Fånga exception om läggas till samma filens path.
+                     */
                     case 1:
                         Console.WriteLine("Enter filepath: ");
 
@@ -56,15 +70,25 @@ namespace FileManagerApp
                         }
                         catch (InvalidOperationException e)
                         {
-                            Console.WriteLine(e.Message); Thread.Sleep(1000);
+                            Console.WriteLine(e.Message); Thread.Sleep(2000);
                         }
                         catch (FileNotFoundException e)
                         {
-                            Console.WriteLine(e.Message); Thread.Sleep(1000);
+                            Console.WriteLine(e.Message); Thread.Sleep(2000);
+                        }
+                        catch(ArgumentException e)
+                        {
+                            Console.WriteLine(e.Message); Thread.Sleep(2000);
                         }
 
                         break;
 
+
+                        /*
+                         * Väljer den filen som vill sorteras.
+                         * Om inte finns någon fil görs en break.
+                         * Fånga exception om filen är tom.
+                        */
                     case 2:
                         filePath = GetSelectedFile();
                         
@@ -76,7 +100,6 @@ namespace FileManagerApp
                         }
                         catch (InvalidOperationException e)
                         {
-
                             Console.WriteLine(e.Message);
                             Thread.Sleep(2000);
                             continue;
@@ -85,6 +108,10 @@ namespace FileManagerApp
                         Console.WriteLine("Sorted!"); Thread.Sleep(1000);
                         break;
 
+                        /*
+                         * Söka efter det ordet som sökas i de filarna.
+                         * skrivas ut totala hittade ord i de filarna och också vilket fil som har högst träffsäkethet och dess hittade ord.         
+                        */
                     case 3:
                         Console.WriteLine("Specify a word to search for: ");
                         string word = Console.ReadLine();
@@ -105,6 +132,7 @@ namespace FileManagerApp
 
                         break;
 
+                        
                     case 4:
                         filePath = GetSelectedFile();
 
