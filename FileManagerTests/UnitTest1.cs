@@ -10,8 +10,12 @@ namespace FileManagerTests
 {
     public class Tests
     {
+        #region Directory Variables
+
         private static string workingDirectory = Directory.GetCurrentDirectory();
         private static string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+
+        #endregion
 
         #region ReadFile Tests
 
