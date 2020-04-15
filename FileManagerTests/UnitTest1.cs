@@ -271,7 +271,6 @@ namespace FileManagerTests
 
         #endregion
 
-  
         #region Search File Integration Test
        
         [Test]

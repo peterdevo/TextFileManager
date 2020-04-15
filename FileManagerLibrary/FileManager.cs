@@ -56,7 +56,11 @@ namespace FileManagerLibrary
 
             foreach (var item in Files)
             {
-                var sortedList = item.Value;
+                if (item.Value.Count < 1)
+                    continue;
+
+                var sortedList = new List<string>(item.Value);
+
                 QuickSort<string>.Sort(sortedList);
                 
                 int occurrences = sortedList.CountOccurencesOf(key);
@@ -110,7 +114,7 @@ namespace FileManagerLibrary
         private static List<string> SplitText(string text)
         {
             return text.Split(
-                new[] { ' ', ',', '.', '-', '?', '!', '\n', '\r' },
+                new[] { ' ', ',', '.', '?', '!', '\n', '\r' },
                 StringSplitOptions.RemoveEmptyEntries
                 ).ToList();
         }

@@ -31,9 +31,6 @@ namespace FileManagerLibrary
             // Start and end variabler är använda för att ha koll när det behövs göra swap
             int start = left;
             int end = right;
-            
-            // Definiera en pivot för att jämföra med start och end element. Här väljs pivot i mitten
-            T pivot = list[(left + right) / 2];
 
             //Kasta exception om listan är null.
             if (list == null)
@@ -41,6 +38,8 @@ namespace FileManagerLibrary
                 throw new NullReferenceException("The list cannot be sorted by null");
             }
 
+            // Definiera en pivot för att jämföra med start och end element. Här väljs pivot i mitten
+            T pivot = list[(left + right) / 2];
           
             // While loop gäller när start och end inte korsar varandra. Om de korsar varandra, kommer funktionen anropa sig själv(rekursivt)
             while (start <= end)

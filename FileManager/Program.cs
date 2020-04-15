@@ -27,8 +27,8 @@ namespace FileManagerApp
 
                 Console.Write("1. Add File \n2. Sort Words Alphabetically \n3. Search for a specific word \n4. View file \n5. Save File \n6. Exit Application \nChoice: ");
                 
-                //Kolla om det är en int så får choice det värdet. 
-                if (int.TryParse(Console.ReadLine(), out int res))
+                // Check if input is a number and a correct choice
+                if (int.TryParse(Console.ReadLine(), out int res) && res < 6 && res > 0)
                 {
                     choice = res;
                 }                    
@@ -41,26 +41,17 @@ namespace FileManagerApp
                     continue;
                 }
 
-                // Om det är ett int, måste kollas att om det existerar i alternativen
-                if (choice>6||choice<1)
-                {
-                    Console.WriteLine("The choice does not exist!");
-                    Thread.Sleep(2000);
-                    continue;
-                }
-              
-                               
-
                 Console.Clear();
 
                 // Använda switch för att köra olika alternativ. 
                 switch (choice)
                 {
-                    /*Det första alternativet är att ta emot file path i ReadFile funktionen.
-                     *Fångar exception om filen är inte txt fil.
-                     *Fångar exception om filen inte existerar.
-                     *Fångar exception om läggas till samma filens path.
-                     */
+                    /*  
+                        Det första alternativet är att ta emot file path i ReadFile funktionen.
+                        Fångar exception om filen är inte txt fil.
+                        Fångar exception om filen inte existerar.
+                        Fångar exception om läggas till samma filens path.
+                    */
                     case 1:
                         Console.WriteLine("Enter filepath: ");
 
@@ -125,7 +116,10 @@ namespace FileManagerApp
                         }
                             
                         Console.Clear();
-                        Console.WriteLine("Total Occurrences: {0} \nFile with highest accuracy: {1} -> {2}", result[0], Path.GetFileName(result[1]), result[2]);
+                        Console.WriteLine($"Total Occurrences: {result[0]}");
+
+                        if (FileManager.Files.Count > 1)
+                            Console.WriteLine("File with highest accuracy: {0} -> {1}", Path.GetFileName(result[1]), result[2]);
 
                         Console.WriteLine("Press any key to return to menu");
                         Console.ReadKey();
