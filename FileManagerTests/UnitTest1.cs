@@ -219,7 +219,7 @@ namespace FileManagerTests
             CollectionAssert.AreEqual(expectedList, testList);
         }
         [Test]
-        public void CheckCharacter
+        public void CheckCharacter()
         {
 
             List<string> testList = new List<string> { "Jag", "gillar", "äta","mat","å","ögon"};
