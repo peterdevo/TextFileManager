@@ -219,13 +219,12 @@ namespace FileManagerTests
             CollectionAssert.AreEqual(expectedList, testList);
         }
         [Test]
-        public void CheckCharacterÃ„Ã–Ã…()
+        public void CheckCharacter()
         {
 
-            List<string> testList = new List<string> { "Jag", "gillar", "ï¿½ta","mat","ï¿½","ï¿½gon"};
+            List<string> testList = new List<string> { "Jag", "gillar", "äta","mat","å","ögon"};
             QuickSort<string>.Sort(testList);
-            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","ï¿½","ï¿½ta","ï¿½gon" };
-
+            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","å","äta","ögon" };
             CollectionAssert.AreEqual(expectedList, testList);
         }
 
@@ -245,7 +244,7 @@ namespace FileManagerTests
 
             Assert.Throws<NullReferenceException>(() => QuickSort<string>.Sort(testList));
         }
-       
+
 
         #endregion
 
