@@ -7,12 +7,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace FileManagerTests
 {
     public class Tests
     {
+        #region Directory Variables
+
         private static string workingDirectory = Directory.GetCurrentDirectory();
         private static string projectDirectory = Directory.GetParent(Directory.GetParent(workingDirectory).ToString()).Parent.FullName;
+
+        #endregion
 
         #region ReadFile Tests
 
@@ -64,9 +69,15 @@ namespace FileManagerTests
             expected = FileManager.Files[filePath].OrderBy(x => x[0]).ToList();
 
             FileManager.SortCollection(filePath);
-            actual = File.ReadAllText(filePath).TrimEnd().Split(" ").ToList();
+            FileManager.SaveFile(filePath);
+            actual = File.ReadAllText(filePath[0..^4] + "_Modified.txt").TrimEnd().Split(" ").ToList();
 
             // Assert
+            foreach (var item in expected)
+            {
+                Assert.IsTrue(actual.Contains(item));
+            }
+
 
         }
 
@@ -208,11 +219,13 @@ namespace FileManagerTests
             CollectionAssert.AreEqual(expectedList, testList);
         }
         [Test]
-        public void CheckCharacterÄÖÅ()
+        public void CheckCharacterÃ„Ã–Ã…()
         {
-            List<string> testList = new List<string> { "Jag", "gillar", "äta","mat","å","ögon"};
+
+            List<string> testList = new List<string> { "Jag", "gillar", "ï¿½ta","mat","ï¿½","ï¿½gon"};
             QuickSort<string>.Sort(testList);
-            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","å","äta","ögon" };
+            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","ï¿½","ï¿½ta","ï¿½gon" };
+
             CollectionAssert.AreEqual(expectedList, testList);
         }
 
@@ -232,22 +245,6 @@ namespace FileManagerTests
 
             Assert.Throws<NullReferenceException>(() => QuickSort<string>.Sort(testList));
         }
-        //[Test]
-        //public void ThrowIndexOutOfRangeExceptionIfLeftIslessThan0()
-        //{
-        //    List<string> testList = new List<string> {"b","a"};
-
-        //    Assert.Throws<IndexOutOfRangeException>(() => QuickSort<string>.Sort(testList));
-        //}
-
-        //[Test]
-        //public void ThrowIndexOutOfRangeExceptionIfRightisIsGreaterThanOrEqualToCount()
-        //{
-        //    List<string> testList = new List<string> { "b", "a" };
-
-        //    Assert.Throws<IndexOutOfRangeException>(() => QuickSort<string>.Sort(testList));
-        //}
-
        
 
         #endregion
@@ -275,6 +272,7 @@ namespace FileManagerTests
 
         #endregion
 
+  
         #region Search File Integration Test
        
         [Test]
