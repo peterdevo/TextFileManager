@@ -5,6 +5,8 @@ using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+
 
 namespace FileManagerTests
 {
@@ -75,6 +77,7 @@ namespace FileManagerTests
             {
                 Assert.IsTrue(actual.Contains(item));
             }
+
 
         }
 
@@ -216,11 +219,11 @@ namespace FileManagerTests
             CollectionAssert.AreEqual(expectedList, testList);
         }
         [Test]
-        public void CheckCharacterÄÖÅ()
+        public void CheckCharacterÃ„Ã–Ã…()
         {
-            List<string> testList = new List<string> { "Jag", "gillar", "äta","mat","å","ögon"};
+            List<string> testList = new List<string> { "Jag", "gillar", "Ã¤ta","mat","Ã¥","Ã¶gon"};
             QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
-            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","å","äta","ögon" };
+            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","Ã¥","Ã¤ta","Ã¶gon" };
             CollectionAssert.AreEqual(expectedList, testList);
         }
 
@@ -256,8 +259,6 @@ namespace FileManagerTests
             Assert.Throws<IndexOutOfRangeException>(() => QuickSort<string>.SortQuick(ref testList, 0, testList.Count));
         }
 
-       
-
         #endregion
 
         #region Read, Sort and Save File Integration Test
@@ -283,5 +284,31 @@ namespace FileManagerTests
 
         #endregion
 
+  
+        #region Search File Integration Test
+       
+        [Test]
+        public void SearchIntegrationTest()
+        {
+            
+            string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";           
+
+          
+            FileManager.ReadFile(filePath);
+            FileManager.SortCollection(filePath);
+            var actual =FileManager.WordOccurrences("far");
+
+            string[]expected = { "3",projectDirectory+"\\TestFiles\\WordOccurrences.txt","3"};
+            
+            Assert.AreEqual(expected, actual);
+        }
+
+        #endregion
+
+      
+       
+     
+
+     
     }
 }
