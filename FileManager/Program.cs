@@ -178,6 +178,10 @@ namespace FileManagerApp
             }
         }
 
+        /// <summary>
+        /// Prints all the 
+        /// </summary>
+        /// <returns></returns>
         private static string GetSelectedFile()
         {
             string[] filePath = new string[FileManager.Files.Count];
