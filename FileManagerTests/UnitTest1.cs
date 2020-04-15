@@ -225,7 +225,6 @@ namespace FileManagerTests
             List<string> testList = new List<string> { "Jag", "gillar", "äta","mat","å","ögon"};
             QuickSort<string>.Sort(testList);
             List<string> expectedList = new List<string> { "gillar", "Jag", "mat","å","äta","ögon" };
-
             CollectionAssert.AreEqual(expectedList, testList);
         }
 
@@ -245,7 +244,7 @@ namespace FileManagerTests
 
             Assert.Throws<NullReferenceException>(() => QuickSort<string>.Sort(testList));
         }
-     
+
 
         #endregion
 
