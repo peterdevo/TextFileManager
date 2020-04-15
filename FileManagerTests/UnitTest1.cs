@@ -316,9 +316,7 @@ namespace FileManagerTests
             string[] expected = { "3", projectDirectory + "\\TestFiles\\WordOccurrences.txt","3" };            
             Assert.AreEqual(expected, actual);
         }
-
         #endregion
-
-     
+    
     }
 }
