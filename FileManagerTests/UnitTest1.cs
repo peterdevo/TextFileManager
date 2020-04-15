@@ -242,12 +242,21 @@ namespace FileManagerTests
             CollectionAssert.AreEqual(expectedList, testList);
         }
         [Test]
-        public void CheckCharacter()
+        public void CheckCharacterÅÄÖ()
         {
 
             List<string> testList = new List<string> { "Jag", "gillar", "äta","mat","å","ögon"};
             QuickSort<string>.Sort(testList);
             List<string> expectedList = new List<string> { "gillar", "Jag", "mat","å","äta","ögon" };
+            CollectionAssert.AreEqual(expectedList, testList);
+        }
+        [Test]
+        public void CheckBigAndSmallLetters()
+        {
+
+            List<string> testList = new List<string> { "a","A","c","C","B","b" };
+            QuickSort<string>.Sort(testList);
+            List<string> expectedList = new List<string> {"a", "A", "b", "B", "c", "C" };
             CollectionAssert.AreEqual(expectedList, testList);
         }
 
@@ -259,6 +268,7 @@ namespace FileManagerTests
             List<string> expectedList = new List<string> { "!", "()", "0", "1", "2", "3","a","b","d"};
             CollectionAssert.AreEqual(expectedList, testList);
         }
+
 
         [Test]
         public void ThrowNullExceptionIfListIsNull()
@@ -293,31 +303,21 @@ namespace FileManagerTests
         }
 
         #endregion
-
   
         #region Search File Integration Test
        
         [Test]
         public void SearchIntegrationTest()
-        {
-            
-            string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";           
-
-          
+        {            
+            string filePath = projectDirectory + "\\TestFiles\\WordOccurrences.txt";                    
             FileManager.ReadFile(filePath);
             FileManager.SortCollection(filePath);
             var actual = FileManager.WordOccurrences("far");
-
-            string[] expected = { "3", projectDirectory + "\\TestFiles\\WordOccurrences.txt","3" };
-            
+            string[] expected = { "3", projectDirectory + "\\TestFiles\\WordOccurrences.txt","3" };            
             Assert.AreEqual(expected, actual);
         }
 
         #endregion
-
-      
-       
-     
 
      
     }
