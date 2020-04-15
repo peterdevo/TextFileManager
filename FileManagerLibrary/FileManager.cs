@@ -22,7 +22,7 @@ namespace FileManagerLibrary
                 throw new InvalidOperationException("Incorrect file type!");
 
             if (exists)
-                AddWordsToCollection(filePath, File.ReadAllText(filePath));
+                AddWordsToCollection(filePath, File.ReadAllText(filePath,Encoding.GetEncoding(28591)));
             else
                 throw new FileNotFoundException("File not found!");
         }

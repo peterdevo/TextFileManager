@@ -28,7 +28,7 @@ namespace FileManagerApp
                 Console.Write("1. Add File \n2. Sort Words Alphabetically \n3. Search for a specific word \n4. View file \n5. Save File \n6. Exit Application \nChoice: ");
                 
                 // Check if input is a number and a correct choice
-                if (int.TryParse(Console.ReadLine(), out int res) && res < 6 && res > 0)
+                if (int.TryParse(Console.ReadLine(), out int res) && res <= 6 && res > 0)
                 {
                     choice = res;
                 }                    
