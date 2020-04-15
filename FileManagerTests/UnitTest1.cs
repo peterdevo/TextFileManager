@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace FileManagerTests
 {
     public class Tests
@@ -68,9 +69,15 @@ namespace FileManagerTests
             expected = FileManager.Files[filePath].OrderBy(x => x[0]).ToList();
 
             FileManager.SortCollection(filePath);
-            actual = File.ReadAllText(filePath).TrimEnd().Split(" ").ToList();
+            FileManager.SaveFile(filePath);
+            actual = File.ReadAllText(filePath[0..^4] + "_Modified.txt").TrimEnd().Split(" ").ToList();
 
             // Assert
+            foreach (var item in expected)
+            {
+                Assert.IsTrue(actual.Contains(item));
+            }
+
 
         }
 
@@ -212,11 +219,11 @@ namespace FileManagerTests
             CollectionAssert.AreEqual(expectedList, testList);
         }
         [Test]
-        public void CheckCharacterÄÖÅ()
+        public void CheckCharacterÃ„Ã–Ã…()
         {
-            List<string> testList = new List<string> { "Jag", "gillar", "äta","mat","å","ögon"};
+            List<string> testList = new List<string> { "Jag", "gillar", "Ã¤ta","mat","Ã¥","Ã¶gon"};
             QuickSort<string>.SortQuick(ref testList, 0, testList.Count - 1);
-            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","å","äta","ögon" };
+            List<string> expectedList = new List<string> { "gillar", "Jag", "mat","Ã¥","Ã¤ta","Ã¶gon" };
             CollectionAssert.AreEqual(expectedList, testList);
         }
 
@@ -252,8 +259,6 @@ namespace FileManagerTests
             Assert.Throws<IndexOutOfRangeException>(() => QuickSort<string>.SortQuick(ref testList, 0, testList.Count));
         }
 
-       
-
         #endregion
 
         #region Read, Sort and Save File Integration Test
@@ -279,6 +284,7 @@ namespace FileManagerTests
 
         #endregion
 
+  
         #region Search File Integration Test
        
         [Test]
