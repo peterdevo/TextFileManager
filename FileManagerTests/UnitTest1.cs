@@ -283,7 +283,7 @@ namespace FileManagerTests
           
             FileManager.ReadFile(filePath);
             FileManager.SortCollection(filePath);
-            var actual =FileManager.WordOccurrences("far");
+            var actual = FileManager.WordOccurrences("far");
 
             string[] expected = { "3", projectDirectory + "\\TestFiles\\WordOccurrences.txt","3" };
             
