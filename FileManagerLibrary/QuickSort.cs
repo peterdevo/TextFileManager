@@ -11,13 +11,22 @@ namespace FileManagerLibrary
     /// <typeparam name="T"></typeparam>
     public static class QuickSort<T> where T : IComparable
     {
+        /// <summary>
+        /// Anropa SortQuick för att göra renare kod 
+        /// </summary>
+        /// <param name="list"></param>
+        public static void Sort(List<T>list)
+        {
+            SortQuick(ref list,0,list.Count-1);
+        }
+
        /// <summary>
        /// Quicksort funktion som har pivot i mittpunkten. Den tar emot en listan, en vänster punkt och en höger punkt.
        /// </summary>
        /// <param name="list">listan som vill bli sorterad</param> 
        /// <param name="left">Left eller start av listan vilket är 0</param>
        /// <param name="right">Right av list vilket är list.Count-1</param>
-        public static void SortQuick(ref List<T> list, int left, int right)
+        private  static void SortQuick(ref List<T> list, int left, int right)
         {
             // Start and end variabler är använda för att ha koll när det behövs göra swap
             int start = left;
@@ -32,13 +41,7 @@ namespace FileManagerLibrary
                 throw new NullReferenceException("The list cannot be sorted by null");
             }
 
-            //Kasta exception om left eller right hamnar utanför loopen
-
-            if (left < 0 || right > list.Count - 1)
-            {
-                throw new IndexOutOfRangeException("Index was outside the bounds of the list");
-            }
-
+          
             // While loop gäller när start och end inte korsar varandra. Om de korsar varandra, kommer funktionen anropa sig själv(rekursivt)
             while (start <= end)
             {

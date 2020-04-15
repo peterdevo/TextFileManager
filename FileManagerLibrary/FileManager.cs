@@ -38,7 +38,7 @@ namespace FileManagerLibrary
 
             var collection = Files[fileName];
 
-            QuickSort<string>.SortQuick(ref collection, 0, collection.Count - 1);
+            QuickSort<string>.Sort(collection);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace FileManagerLibrary
             foreach (var item in Files)
             {
                 var sortedList = item.Value;
-                QuickSort<string>.SortQuick(ref sortedList, 0, sortedList.Count - 1);
+                QuickSort<string>.Sort(sortedList);
                 
                 int occurrences = sortedList.CountOccurencesOf(key);
                 total += occurrences;
