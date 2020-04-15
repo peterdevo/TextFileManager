@@ -180,6 +180,29 @@ namespace FileManagerTests
             Assert.IsTrue(list.CountOccurencesOf("a") == 2);
         }
 
+        [Test]
+        public void EmptyList_ReturnsZero()
+        {
+            List<string> list = new List<string>();
+            Assert.IsTrue(list.CountOccurencesOf("a") == 0);
+        }
+
+        [Test]
+        public void Test_NonCaseSensitive()
+        {
+            List<string> list = new List<string>() { "ADjhidvA", "asdfsadf", "lkjhda", "LKKJJ", "UOklOOU" };
+
+            bool assert = 
+                list.CountOccurencesOf("adjhidvA")      == 0 ? false :
+                list.CountOccurencesOf("uokLooU")       == 0 ? false :   
+                list.CountOccurencesOf("LKJHDA")        == 0 ? false :
+                list.CountOccurencesOf("lkkjj")         == 0 ? false :
+                list.CountOccurencesOf("AsDFSaDF")      == 0 ? false :
+                true;
+
+            Assert.IsTrue(assert);
+        }
+
         #endregion
 
         #region Quick Sort Tests
